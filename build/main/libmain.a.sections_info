@@ -1,0 +1,135 @@
+In archive C:/msys32/home/Gerry/esp/http_jpg/build/main/libmain.a:
+
+main.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .literal.app_main 00000028  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .text         00000000  00000000  00000000  0000005c  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         00000000  00000000  00000000  0000005c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000000  00000000  00000000  0000005c  2**0
+                  ALLOC
+  4 .rodata.str1.4 00000042  00000000  00000000  0000005c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .text.app_main 00000050  00000000  00000000  000000a0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  6 .bss.server$7902 00000004  00000000  00000000  000000f0  2**2
+                  ALLOC
+  7 .rodata.__func__$7904 00000009  00000000  00000000  000000f0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  8 .debug_frame  00000028  00000000  00000000  000000fc  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  9 .debug_info   000006bd  00000000  00000000  00000124  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 10 .debug_abbrev 000001fd  00000000  00000000  000007e1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000001e  00000000  00000000  000009de  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 12 .debug_aranges 00000020  00000000  00000000  000009fc  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 13 .debug_ranges 00000010  00000000  00000000  00000a1c  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 14 .debug_line   00000368  00000000  00000000  00000a2c  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 15 .debug_str    000007a0  00000000  00000000  00000d94  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 16 .comment      0000003c  00000000  00000000  00001534  2**0
+                  CONTENTS, READONLY
+ 17 .xtensa.info  00000038  00000000  00000000  00001570  2**0
+                  CONTENTS, READONLY
+ 18 .xt.lit       00000008  00000000  00000000  000015a8  2**0
+                  CONTENTS, RELOC, READONLY
+ 19 .xt.prop      00000054  00000000  00000000  000015b0  2**0
+                  CONTENTS, RELOC, READONLY
+
+rest.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .literal.start_webserver 00000054  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .literal.enable_led 0000003c  00000000  00000000  00000088  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  2 .literal.lamp_off_httpd_handler 0000000c  00000000  00000000  000000c4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  3 .literal.lamp_on_httpd_handler 0000000c  00000000  00000000  000000d0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  4 .literal.jpg_httpd_handler 0000005c  00000000  00000000  000000dc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  5 .literal.stop_webserver 0000000c  00000000  00000000  00000138  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  6 .literal.event_handler 00000064  00000000  00000000  00000144  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  7 .literal.init_camera 00000030  00000000  00000000  000001a8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  8 .literal.init_wifi 000000a0  00000000  00000000  000001d8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  9 .text         00000000  00000000  00000000  00000278  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 10 .data         00000000  00000000  00000000  00000278  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+ 11 .bss          00000000  00000000  00000000  00000278  2**0
+                  ALLOC
+ 12 .rodata.str1.4 00000461  00000000  00000000  00000278  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 13 .rodata       00000098  00000000  00000000  000006dc  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 14 .text.start_webserver 000000c7  00000000  00000000  00000774  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 15 .text.enable_led 000000ac  00000000  00000000  0000083c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 16 .text.lamp_off_httpd_handler 0000002f  00000000  00000000  000008e8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 17 .text.lamp_on_httpd_handler 0000002f  00000000  00000000  00000918  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 18 .text.jpg_httpd_handler 000000fa  00000000  00000000  00000948  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 19 .text.stop_webserver 0000002e  00000000  00000000  00000a44  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 20 .text.event_handler 0000010c  00000000  00000000  00000a74  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 21 .text.init_camera 00000060  00000000  00000000  00000b80  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 22 .text.init_wifi 000001e2  00000000  00000000  00000be0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 23 .rodata.__func__$8397 0000000e  00000000  00000000  00000dc4  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 24 .rodata.__func__$8382 0000000a  00000000  00000000  00000dd4  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 25 .rodata.__func__$8377 0000000c  00000000  00000000  00000de0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 26 .data.uri_handler_lampOFF 00000010  00000000  00000000  00000dec  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+ 27 .data.uri_handler_lampON 00000010  00000000  00000000  00000dfc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+ 28 .data.uri_handler_jpg 00000010  00000000  00000000  00000e0c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+ 29 .data.camera_config 0000005c  00000000  00000000  00000e1c  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+ 30 .debug_frame  000000e8  00000000  00000000  00000e78  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 31 .debug_info   00002a2e  00000000  00000000  00000f60  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 32 .debug_abbrev 0000036f  00000000  00000000  0000398e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 33 .debug_loc    00000369  00000000  00000000  00003cfd  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 34 .debug_aranges 00000060  00000000  00000000  00004066  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 35 .debug_ranges 00000050  00000000  00000000  000040c6  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 36 .debug_line   0000081b  00000000  00000000  00004116  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 37 .debug_str    000020b6  00000000  00000000  00004931  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 38 .comment      0000003c  00000000  00000000  000069e7  2**0
+                  CONTENTS, READONLY
+ 39 .xtensa.info  00000038  00000000  00000000  00006a23  2**0
+                  CONTENTS, READONLY
+ 40 .xt.lit       00000048  00000000  00000000  00006a5b  2**0
+                  CONTENTS, RELOC, READONLY
+ 41 .xt.prop      00000354  00000000  00000000  00006aa3  2**0
+                  CONTENTS, RELOC, READONLY

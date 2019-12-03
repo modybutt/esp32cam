@@ -1,0 +1,288 @@
+In archive C:/msys32/home/Gerry/esp/http_jpg/build/tcpip_adapter/libtcpip_adapter.a:
+
+tcpip_adapter_lwip.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .literal.tcpip_adapter_reset_ip_info 0000000c  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .literal.tcpip_adapter_set_old_ip_info_api 00000010  00000000  00000000  00000040  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  2 .literal.tcpip_adapter_dhcps_cb 0000001c  00000000  00000000  00000050  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  3 .literal.tcpip_adapter_ip_lost_timer 00000050  00000000  00000000  0000006c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  4 .literal.tcpip_adapter_nd6_cb 0000002c  00000000  00000000  000000bc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  5 .literal.tcpip_adapter_ipc_check 00000028  00000000  00000000  000000e8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  6 .literal.tcpip_adapter_api_cb 00000020  00000000  00000000  00000110  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  7 .literal.tcpip_adapter_update_default_netif 00000018  00000000  00000000  00000130  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  8 .literal.tcpip_adapter_start 0000007c  00000000  00000000  00000148  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  9 .literal.tcpip_adapter_start_api 0000000c  00000000  00000000  000001c4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 10 .literal.tcpip_adapter_start_ip_lost_timer 00000060  00000000  00000000  000001d0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 11 .literal.tcpip_adapter_dhcpc_cb 0000006c  00000000  00000000  00000230  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 12 .literal.tcpip_adapter_init 0000004c  00000000  00000000  0000029c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 13 .literal.tcpip_adapter_eth_start 00000014  00000000  00000000  000002e8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 14 .literal.tcpip_adapter_sta_start 00000014  00000000  00000000  000002fc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 15 .literal.tcpip_adapter_ap_start 00000014  00000000  00000000  00000310  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 16 .literal.tcpip_adapter_stop 00000060  00000000  00000000  00000324  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 17 .literal.tcpip_adapter_stop_api 0000000c  00000000  00000000  00000384  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 18 .literal.tcpip_adapter_up 00000040  00000000  00000000  00000390  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 19 .literal.tcpip_adapter_up_api 0000000c  00000000  00000000  000003d0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 20 .literal.tcpip_adapter_down 00000050  00000000  00000000  000003dc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 21 .literal.tcpip_adapter_down_api 0000000c  00000000  00000000  0000042c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 22 .literal.tcpip_adapter_set_old_ip_info 0000002c  00000000  00000000  00000438  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 23 .literal.tcpip_adapter_get_old_ip_info 00000014  00000000  00000000  00000464  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 24 .literal.tcpip_adapter_get_ip_info 00000014  00000000  00000000  00000478  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 25 .literal.tcpip_adapter_create_ip6_linklocal 0000003c  00000000  00000000  0000048c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 26 .literal.tcpip_adapter_create_ip6_linklocal_api 0000000c  00000000  00000000  000004c8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 27 .literal.tcpip_adapter_get_ip6_linklocal 00000014  00000000  00000000  000004d4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 28 .literal.tcpip_adapter_dhcps_option 00000038  00000000  00000000  000004e8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 29 .literal.tcpip_adapter_set_dns_info 0000007c  00000000  00000000  00000520  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 30 .literal.tcpip_adapter_set_dns_info_api 0000000c  00000000  00000000  0000059c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 31 .literal.tcpip_adapter_get_dns_info 0000005c  00000000  00000000  000005a8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 32 .literal.tcpip_adapter_get_dns_info_api 0000000c  00000000  00000000  00000604  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 33 .literal.tcpip_adapter_dhcps_get_status 0000000c  00000000  00000000  00000610  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 34 .literal.tcpip_adapter_dhcps_start 00000070  00000000  00000000  0000061c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 35 .literal.tcpip_adapter_dhcps_start_api 0000000c  00000000  00000000  0000068c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 36 .literal.tcpip_adapter_dhcps_stop 00000070  00000000  00000000  00000698  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 37 .literal.tcpip_adapter_dhcps_stop_api 0000000c  00000000  00000000  00000708  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 38 .literal.tcpip_adapter_dhcpc_option 00000008  00000000  00000000  00000714  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 39 .literal.tcpip_adapter_dhcpc_get_status 0000000c  00000000  00000000  0000071c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 40 .literal.tcpip_adapter_set_ip_info 00000068  00000000  00000000  00000728  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 41 .literal.tcpip_adapter_set_ip_info_api 0000000c  00000000  00000000  00000790  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 42 .literal.tcpip_adapter_dhcpc_start 000000a4  00000000  00000000  0000079c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 43 .literal.tcpip_adapter_dhcpc_start_api 0000000c  00000000  00000000  00000840  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 44 .literal.tcpip_adapter_dhcpc_stop 00000078  00000000  00000000  0000084c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 45 .literal.tcpip_adapter_dhcpc_stop_api 0000000c  00000000  00000000  000008c4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 46 .literal.tcpip_adapter_eth_input 00000010  00000000  00000000  000008d0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 47 .literal.tcpip_adapter_sta_input 00000010  00000000  00000000  000008e0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 48 .literal.tcpip_adapter_ap_input 00000010  00000000  00000000  000008f0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 49 .literal.tcpip_adapter_get_esp_if 0000000c  00000000  00000000  00000900  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 50 .literal.tcpip_adapter_get_sta_list 00000018  00000000  00000000  0000090c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 51 .literal.tcpip_adapter_set_hostname 00000044  00000000  00000000  00000924  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 52 .literal.tcpip_adapter_set_hostname_api 0000000c  00000000  00000000  00000968  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 53 .literal.tcpip_adapter_get_hostname 00000010  00000000  00000000  00000974  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 54 .literal.tcpip_adapter_get_netif 00000014  00000000  00000000  00000984  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 55 .literal.tcpip_adapter_is_netif_up 0000000c  00000000  00000000  00000998  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 56 .text         00000000  00000000  00000000  000009a4  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 57 .data         00000000  00000000  00000000  000009a4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+ 58 .bss          00000000  00000000  00000000  000009a4  2**0
+                  ALLOC
+ 59 .text.tcpip_adapter_reset_ip_info 00000053  00000000  00000000  000009a4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 60 .text.tcpip_adapter_set_old_ip_info_api 00000047  00000000  00000000  000009f8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 61 .rodata.str1.4 00000932  00000000  00000000  00000a40  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 62 .text.tcpip_adapter_dhcps_cb 000000b6  00000000  00000000  00001374  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 63 .text.tcpip_adapter_ip_lost_timer 00000118  00000000  00000000  0000142c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 64 .text.tcpip_adapter_nd6_cb 00000130  00000000  00000000  00001544  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 65 .text.tcpip_adapter_ipc_check 00000063  00000000  00000000  00001674  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 66 .text.tcpip_adapter_api_cb 00000064  00000000  00000000  000016d8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 67 .text.tcpip_adapter_update_default_netif 00000076  00000000  00000000  0000173c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 68 .text.tcpip_adapter_start 00000208  00000000  00000000  000017b4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 69 .text.tcpip_adapter_start_api 0000003b  00000000  00000000  000019bc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 70 .text.tcpip_adapter_start_ip_lost_timer 00000128  00000000  00000000  000019f8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 71 .text.tcpip_adapter_dhcpc_cb 000001f6  00000000  00000000  00001b20  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 72 .text.tcpip_adapter_init 000000f4  00000000  00000000  00001d18  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 73 .text.tcpip_adapter_eth_start 00000043  00000000  00000000  00001e0c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 74 .text.tcpip_adapter_sta_start 00000043  00000000  00000000  00001e50  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 75 .text.tcpip_adapter_ap_start 00000043  00000000  00000000  00001e94  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 76 .text.tcpip_adapter_stop 0000013b  00000000  00000000  00001ed8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 77 .text.tcpip_adapter_stop_api 0000003f  00000000  00000000  00002014  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 78 .text.tcpip_adapter_up 000000d4  00000000  00000000  00002054  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 79 .text.tcpip_adapter_up_api 0000003f  00000000  00000000  00002128  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 80 .text.tcpip_adapter_down 000000ff  00000000  00000000  00002168  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 81 .text.tcpip_adapter_down_api 00000037  00000000  00000000  00002268  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 82 .text.tcpip_adapter_set_old_ip_info 0000009f  00000000  00000000  000022a0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 83 .text.tcpip_adapter_get_old_ip_info 0000005f  00000000  00000000  00002340  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 84 .text.tcpip_adapter_get_ip_info 000000b3  00000000  00000000  000023a0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 85 .text.tcpip_adapter_create_ip6_linklocal 000000c3  00000000  00000000  00002454  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 86 .text.tcpip_adapter_create_ip6_linklocal_api 00000037  00000000  00000000  00002518  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 87 .text.tcpip_adapter_get_ip6_linklocal 0000007f  00000000  00000000  00002550  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 88 .text.tcpip_adapter_dhcps_option 0000020f  00000000  00000000  000025d0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 89 .text.tcpip_adapter_set_dns_info 0000019c  00000000  00000000  000027e0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 90 .text.tcpip_adapter_set_dns_info_api 0000003e  00000000  00000000  0000297c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 91 .text.tcpip_adapter_get_dns_info 00000142  00000000  00000000  000029bc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 92 .text.tcpip_adapter_get_dns_info_api 0000003e  00000000  00000000  00002b00  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 93 .text.tcpip_adapter_dhcps_get_status 0000003c  00000000  00000000  00002b40  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 94 .text.tcpip_adapter_dhcps_start 0000013b  00000000  00000000  00002b7c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 95 .text.tcpip_adapter_dhcps_start_api 00000037  00000000  00000000  00002cb8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 96 .text.tcpip_adapter_dhcps_stop 00000132  00000000  00000000  00002cf0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 97 .text.tcpip_adapter_dhcps_stop_api 00000037  00000000  00000000  00002e24  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 98 .text.tcpip_adapter_dhcpc_option 0000002e  00000000  00000000  00002e5c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 99 .text.tcpip_adapter_dhcpc_get_status 0000003f  00000000  00000000  00002e8c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+100 .text.tcpip_adapter_set_ip_info 00000238  00000000  00000000  00002ecc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+101 .text.tcpip_adapter_set_ip_info_api 0000003a  00000000  00000000  00003104  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+102 .text.tcpip_adapter_dhcpc_start 0000021b  00000000  00000000  00003140  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+103 .text.tcpip_adapter_dhcpc_start_api 00000037  00000000  00000000  0000335c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+104 .text.tcpip_adapter_dhcpc_stop 0000015e  00000000  00000000  00003394  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+105 .text.tcpip_adapter_dhcpc_stop_api 00000037  00000000  00000000  000034f4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+106 .text.tcpip_adapter_eth_input 0000003b  00000000  00000000  0000352c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+107 .text.tcpip_adapter_sta_input 0000003b  00000000  00000000  00003568  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+108 .text.tcpip_adapter_ap_input 0000003b  00000000  00000000  000035a4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+109 .text.tcpip_adapter_get_esp_if 0000005a  00000000  00000000  000035e0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+110 .text.tcpip_adapter_get_sta_list 00000087  00000000  00000000  0000363c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+111 .text.tcpip_adapter_set_hostname 000000f3  00000000  00000000  000036c4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+112 .text.tcpip_adapter_set_hostname_api 0000003a  00000000  00000000  000037b8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+113 .text.tcpip_adapter_get_hostname 0000005f  00000000  00000000  000037f4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+114 .text.tcpip_adapter_get_netif 00000046  00000000  00000000  00003854  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+115 .text.tcpip_adapter_is_netif_up 00000054  00000000  00000000  0000389c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+116 .bss.hostinfo$8789 00000063  00000000  00000000  000038f0  2**2
+                  ALLOC
+117 .rodata.__func__$8561 00000014  00000000  00000000  000038f0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+118 .bss.api_lock_sem 00000004  00000000  00000000  00003904  2**2
+                  ALLOC
+119 .bss.tcpip_inited 00000001  00000000  00000000  00003904  2**0
+                  ALLOC
+120 .bss.api_sync_sem 00000004  00000000  00000000  00003904  2**2
+                  ALLOC
+121 .bss.dhcpc_status 0000000c  00000000  00000000  00003904  2**2
+                  ALLOC
+122 .bss.dhcps_status 00000004  00000000  00000000  00003904  2**2
+                  ALLOC
+123 .bss.esp_ip_lost_timer 00000003  00000000  00000000  00003904  2**2
+                  ALLOC
+124 .bss.esp_netif_init_fn 0000000c  00000000  00000000  00003904  2**2
+                  ALLOC
+125 .bss.esp_ip6  00000030  00000000  00000000  00003904  2**2
+                  ALLOC
+126 .bss.esp_ip_old 00000024  00000000  00000000  00003904  2**2
+                  ALLOC
+127 .bss.esp_ip   00000024  00000000  00000000  00003904  2**2
+                  ALLOC
+128 .bss.esp_netif 0000000c  00000000  00000000  00003904  2**2
+                  ALLOC
+129 .debug_frame  00000550  00000000  00000000  00003904  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+130 .debug_info   00004109  00000000  00000000  00003e54  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+131 .debug_abbrev 000003f5  00000000  00000000  00007f5d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+132 .debug_loc    0000163a  00000000  00000000  00008352  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+133 .debug_aranges 000001d8  00000000  00000000  0000998c  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+134 .debug_ranges 000001f8  00000000  00000000  00009b64  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+135 .debug_line   00001d19  00000000  00000000  00009d5c  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+136 .debug_str    000024c2  00000000  00000000  0000ba75  2**0
+                  CONTENTS, READONLY, DEBUGGING
+137 .comment      0000003c  00000000  00000000  0000df37  2**0
+                  CONTENTS, READONLY
+138 .xtensa.info  00000038  00000000  00000000  0000df73  2**0
+                  CONTENTS, READONLY
+139 .xt.lit       000001c0  00000000  00000000  0000dfab  2**0
+                  CONTENTS, RELOC, READONLY
+140 .xt.prop      00001cd4  00000000  00000000  0000e16b  2**0
+                  CONTENTS, RELOC, READONLY

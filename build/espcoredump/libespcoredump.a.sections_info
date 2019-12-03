@@ -1,0 +1,123 @@
+In archive C:/msys32/home/Gerry/esp/http_jpg/build/espcoredump/libespcoredump.a:
+
+core_dump_uart.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  00000000  00000000  00000034  2**0
+                  ALLOC
+  3 .debug_info   00000099  00000000  00000000  00000034  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  4 .debug_abbrev 0000004c  00000000  00000000  000000cd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_aranges 00000018  00000000  00000000  00000119  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  6 .debug_line   0000006d  00000000  00000000  00000131  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    000001bc  00000000  00000000  0000019e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .comment      0000003c  00000000  00000000  0000035a  2**0
+                  CONTENTS, READONLY
+  9 .xtensa.info  00000038  00000000  00000000  00000396  2**0
+                  CONTENTS, READONLY
+
+core_dump_common.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .literal.esp_core_dump_init 00000008  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .literal.esp_core_dump_image_get 00000060  00000000  00000000  0000003c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  2 .text         00000000  00000000  00000000  0000009c  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data         00000000  00000000  00000000  0000009c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          00000000  00000000  00000000  0000009c  2**0
+                  ALLOC
+  5 .text.esp_core_dump_init 0000002e  00000000  00000000  0000009c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  6 .rodata.str1.4 000000f2  00000000  00000000  000000cc  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .text.esp_core_dump_image_get 0000017c  00000000  00000000  000001c0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  8 .dram1.14     00000015  00000000  00000000  0000033c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  9 .debug_frame  00000040  00000000  00000000  00000354  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 10 .debug_info   000005af  00000000  00000000  00000394  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 11 .debug_abbrev 00000164  00000000  00000000  00000943  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_loc    000001a4  00000000  00000000  00000aa7  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 13 .debug_aranges 00000028  00000000  00000000  00000c4b  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 14 .debug_ranges 00000018  00000000  00000000  00000c73  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 15 .debug_line   0000040c  00000000  00000000  00000c8b  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 16 .debug_str    000007f4  00000000  00000000  00001097  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 17 .comment      0000003c  00000000  00000000  0000188b  2**0
+                  CONTENTS, READONLY
+ 18 .xtensa.info  00000038  00000000  00000000  000018c7  2**0
+                  CONTENTS, READONLY
+ 19 .xt.lit       00000010  00000000  00000000  000018ff  2**0
+                  CONTENTS, RELOC, READONLY
+ 20 .xt.prop      00000114  00000000  00000000  0000190f  2**0
+                  CONTENTS, RELOC, READONLY
+
+core_dump_flash.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  00000000  00000000  00000034  2**0
+                  ALLOC
+  3 .debug_info   00000099  00000000  00000000  00000034  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  4 .debug_abbrev 0000004c  00000000  00000000  000000cd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_aranges 00000018  00000000  00000000  00000119  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  6 .debug_line   0000006e  00000000  00000000  00000131  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    000001bd  00000000  00000000  0000019f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .comment      0000003c  00000000  00000000  0000035c  2**0
+                  CONTENTS, READONLY
+  9 .xtensa.info  00000038  00000000  00000000  00000398  2**0
+                  CONTENTS, READONLY
+
+core_dump_port.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  00000000  00000000  00000034  2**0
+                  ALLOC
+  3 .debug_info   00000099  00000000  00000000  00000034  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  4 .debug_abbrev 0000004c  00000000  00000000  000000cd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_aranges 00000018  00000000  00000000  00000119  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  6 .debug_line   0000006d  00000000  00000000  00000131  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    000001bc  00000000  00000000  0000019e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .comment      0000003c  00000000  00000000  0000035a  2**0
+                  CONTENTS, READONLY
+  9 .xtensa.info  00000038  00000000  00000000  00000396  2**0
+                  CONTENTS, READONLY
