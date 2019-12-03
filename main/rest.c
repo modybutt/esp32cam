@@ -91,8 +91,6 @@ httpd_handle_t start_webserver(void) {
 		// Set URI handlers
 		ESP_LOGI(TAG, "Registering URI handlers");
 		httpd_register_uri_handler(server, &uri_handler_jpg);
-		httpd_register_uri_handler(server, &uri_handler_lampON);
-		httpd_register_uri_handler(server, &uri_handler_lampOFF);
 		return server;
 	}
 
@@ -135,41 +133,6 @@ static esp_err_t jpg_httpd_handler(httpd_req_t *req) {
 
 	int64_t fr_end = esp_timer_get_time();
 	ESP_LOGI(TAG, "JPG: %uKB %ums", (uint32_t)(fb_len / 1024), (uint32_t)((fr_end - fr_start) / 1000));
-	return res;
-}
-
-// Handles HTTP GET: "Lamp ON" request
-static esp_err_t lamp_on_httpd_handler(httpd_req_t *req) {
-	return enable_led(1);
-}
-
-// Handles HTTP GET: "Lamp OFF" request
-static esp_err_t lamp_off_httpd_handler(httpd_req_t *req) {
-	return enable_led(0);
-}
-
-// Turn LED On or Off
-static esp_err_t enable_led(int enable) {
-	esp_err_t res = ESP_OK;
-
-	res = ledc_set_duty(LEDC_HIGH_SPEED_MODE, camera_config.ledc_channel, enable ? 1 : 0);
-
-	if (res == ESP_OK) {
-		res = ledc_update_duty(LEDC_HIGH_SPEED_MODE, camera_config.ledc_channel);
-	}
-
-	if (res != ESP_OK) {
-		ESP_LOGE(TAG, "LAMP enable/disable failed");
-	} else {
-		if (enable == 0) {
-			ESP_LOGI(TAG, "LAMP: OFF");
-		} else {
-			// HINT: The LED needs to be turned on ~150ms before the call to esp_camera_fb_get()
-			// vTaskDelay(150 / portTICK_PERIOD_MS);
-			ESP_LOGI(TAG, "LAMP: ON");
-		}
-	}
-
 	return res;
 }
 

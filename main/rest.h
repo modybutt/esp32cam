@@ -85,16 +85,4 @@ static httpd_uri_t uri_handler_jpg = {
     .handler = jpg_httpd_handler
 };
 
-static httpd_uri_t uri_handler_lampON = {
-    .uri = "/lampON",
-    .method = HTTP_GET,
-    .handler = lamp_on_httpd_handler
-};
-
-static httpd_uri_t uri_handler_lampOFF = {
-    .uri = "/lampOFF",
-    .method = HTTP_GET,
-    .handler = lamp_off_httpd_handler
-};
-
 #endif /* MAIN_REST_H_ */
