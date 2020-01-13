@@ -238,7 +238,7 @@ static int create_multicast_ipv4_socket() {
 	if (err < 0) {
 		ESP_LOGE(TAG, "Failed to bind socket. Error %d", errno);
 		close(sock);
-		return -1;;
+		return -1;
 	}
 
 	// Set Time To Live to not forward messages
@@ -250,7 +250,6 @@ static int create_multicast_ipv4_socket() {
 		close(sock);
 		return -1;
 	}
-
 
 	// Disable device multicast loopback
 	uint8_t loopback_val = 0;
@@ -289,7 +288,8 @@ static void mcast_worker_task(void* pvParameters) {
         inet_aton(CONFIG_MULTICAST_ADDR, &sdestv4.sin_addr.s_addr);
 
         // Loop waiting for UDP received, and sending UDP packets if we don't see any.
-        for (int err = 1; err > 0; ) {
+        int handshakeDone = 0;
+        for (int state = 1; state > 0; ) {
             struct timeval tv = {
                 .tv_sec = 3,
                 .tv_usec = 0,
@@ -303,7 +303,7 @@ static void mcast_worker_task(void* pvParameters) {
 
             if (selected < 0) {
                 ESP_LOGE(TAG, "Select failed: errno %d", errno);
-                err = -1;
+                state = -1;
                 continue;
             } else if (selected > 0) {
                 if (FD_ISSET(sock, &rfds)) {
@@ -317,7 +317,7 @@ static void mcast_worker_task(void* pvParameters) {
 
                     if (len < 0)  {
                         ESP_LOGE(TAG, "Multicast recvfrom failed: errno %d", errno);
-                        err = -1;
+                        state = -1;
                         continue;
                     }
 
@@ -330,14 +330,18 @@ static void mcast_worker_task(void* pvParameters) {
                     recvbuf[len] = 0; // Null-terminate to treat as a string
                     ESP_LOGI(TAG, "%s", recvbuf);
 
-                    if (strcmp(recvbuf, CONFIG_MULTICAST_PING) == 0) {
+                    if (strcmp(recvbuf, CONFIG_MULTICAST_HOST) == 0) {
                     	// Send reply message to server request
-                    	err = multicast_send(sock, CONFIG_MULTICAST_PONG, CONFIG_DEVICE_ID);
+                    	state = multicast_send(sock, CONFIG_MULTICAST_PONG, CONFIG_DEVICE_ID);
+
+                    	if (state > 0) {
+                    		handshakeDone = 1;
+                    	}
                     }
                 }
-            } else {
+            } else if (handshakeDone == 0) {
                 // Timeout passed with no incoming data, so send something
-            	err = multicast_send(sock, CONFIG_MULTICAST_PING, 0);
+            	state = multicast_send(sock, CONFIG_MULTICAST_PING, 0);
             }
         }
 
@@ -363,7 +367,7 @@ static int multicast_send(int sock, const char* message, int deviceId) {
 	struct addrinfo hints = {
 		.ai_flags = AI_PASSIVE,
 		.ai_socktype = SOCK_DGRAM,
-		hints.ai_family = AF_INET
+		.ai_family = AF_INET
 	};
 
 	int err = getaddrinfo(CONFIG_MULTICAST_ADDR, NULL, &hints, &res);

@@ -13,5 +13,6 @@
 #define CONFIG_MULTICAST_PORT 4446
 #define CONFIG_MULTICAST_PING "Wadu?"
 #define CONFIG_MULTICAST_PONG "Hek!%d"
+#define CONFIG_MULTICAST_HOST "OhHiMark"
 
 #endif /* MAIN_SETTINGS_H_ */
