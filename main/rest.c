@@ -6,12 +6,14 @@
  */
 #include "rest.h"
 #include "settings.h"
+#include "mulmsg.h"
 #include <nvs_flash.h>
 #include <esp_camera.h>
 #include <esp_event_loop.h>
 #include <esp_wifi.h>
 #include <esp_log.h>
 #include <esp_now.h>
+#include <tcpip_adapter.h>
 #include <lwip/sockets.h>
 #include <lwip/netdb.h>
 #include <freertos/event_groups.h>
@@ -29,14 +31,21 @@ static esp_err_t jpg_httpd_handler(httpd_req_t* req);
 static int create_multicast_ipv4_socket();
 // Multicast working task handling receiving and sending messages
 static void mcast_worker_task(void* pvParameters);
-// Sends a multicast message with device id (0 = ANY)
-static int multicast_send(int sock, const char* message, int deviceId);
-
+// Registers to multicast group to receive messages
+static int register_multicast_ipv4_group(int sock);
+// Handles received multicast message
+static int handle_mulmsg(int sock, mulmsg* message, const char* address);
+// Sends a multicast message via socket
+static int multicast_send(int sock, mulmsg* message, const char* address);
 
 // Logger tag name
-static const char* TAG = "LMS:";
+static const char* TAG = "LMS";
 // FreeRTOS event group to signal when we are connected & ready to make a request
 static EventGroupHandle_t wifi_event_group;
+
+#ifdef CONFIG_MULTICAST_HANDSHAKE
+static int handshakeDone = 0;
+#endif
 
 // Camera config
 static camera_config_t camera_config = {
@@ -149,6 +158,7 @@ static esp_err_t event_handler(void* ctx, system_event_t* event) {
 				*server = NULL;
 			}
 
+			esp_wifi_connect();
 			break;
 		}
 		default: {
@@ -252,15 +262,80 @@ static int create_multicast_ipv4_socket() {
 	}
 
 	// Disable device multicast loopback
-	uint8_t loopback_val = 0;
-	err = setsockopt(sock, IPPROTO_IP, IP_MULTICAST_LOOP, &loopback_val, sizeof(uint8_t));
+//	uint8_t loopback_val = 0;
+//	err = setsockopt(sock, IPPROTO_IP, IP_MULTICAST_LOOP, &loopback_val, sizeof(uint8_t));
+//
+//	if (err < 0) {
+//		ESP_LOGE(TAG, "Failed to set IP_MULTICAST_LOOP. Error %d", errno);
+//	    close(sock);
+//		return -1;
+//	}
+
+	// Register to multicast group for receiving messages
+	err = register_multicast_ipv4_group(sock);
 
 	if (err < 0) {
-		ESP_LOGE(TAG, "Failed to set IP_MULTICAST_LOOP. Error %d", errno);
+		ESP_LOGE(TAG, "Failed to register multicast group. Error %d", errno);
+	    close(sock);
 		return -1;
 	}
 
 	return sock;
+}
+
+// Registers to multicast group to receive messages
+static int register_multicast_ipv4_group(int sock) {
+    struct ip_mreq imreq = { 0 };
+    struct in_addr iaddr = { 0 };
+//    esp_netif_ip_info_t ip_info = { 0 };
+    int err = 0;
+
+//    err = esp_netif_get_ip_info(get_example_netif(), &ip_info);
+//
+//    if (err != ESP_OK) {
+//		ESP_LOGE(TAG, "Failed to get IP address info. Error 0x%x", err);
+//		return -1;
+//	}
+//
+//	inet_addr_from_ip4addr(&iaddr, &ip_info.ip);
+
+//    tcpip_adapter_ip_info_t ip_info = { 0 };
+//    tcpip_adapter_get_ip_info(ESP_IF_WIFI_STA, &ip_info);
+//    ESP_LOGI(TAG, "IP %s", ip4addr_ntoa(&ip_info.ip));
+//    inet_addr_from_ip4addr(&iaddr, &ip_info.ip);
+
+    // Configure multicast address to listen to
+    err = inet_aton(CONFIG_MULTICAST_ADDR, &imreq.imr_multiaddr.s_addr);
+
+    if (err != 1) {
+        ESP_LOGE(TAG, "Configured IPV4 multicast address '%s' is invalid.", CONFIG_MULTICAST_ADDR);
+        return -1;
+    }
+
+    ESP_LOGI(TAG, "Configured IPV4 Multicast address %s", inet_ntoa(imreq.imr_multiaddr.s_addr));
+
+    // Check for valid address range
+    if (!IP_MULTICAST(ntohl(imreq.imr_multiaddr.s_addr))) {
+        ESP_LOGW(TAG, "Configured IPV4 multicast address '%s' is not a valid multicast address. This will probably not work.", CONFIG_MULTICAST_ADDR);
+    }
+
+    // Assign the IPV4 multicast source interface via its IP
+    err = setsockopt(sock, IPPROTO_IP, IP_MULTICAST_IF, &iaddr, sizeof(struct in_addr));
+
+    if (err < 0) {
+		ESP_LOGE(TAG, "Failed to set IP_MULTICAST_IF. Error %d", errno);
+		return -1;
+	}
+
+    // Assign to the multicast group
+    err = setsockopt(sock, IPPROTO_IP, IP_ADD_MEMBERSHIP, &imreq, sizeof(struct ip_mreq));
+
+    if (err < 0) {
+        ESP_LOGE(TAG, "Failed to set IP_ADD_MEMBERSHIP. Error %d", errno);
+        return -1;
+    }
+
+    return err;
 }
 
 // Multicast working task handling receiving and sending messages
@@ -288,10 +363,12 @@ static void mcast_worker_task(void* pvParameters) {
         inet_aton(CONFIG_MULTICAST_ADDR, &sdestv4.sin_addr.s_addr);
 
         // Loop waiting for UDP received, and sending UDP packets if we don't see any.
-        int handshakeDone = 0;
+#ifdef CONFIG_MULTICAST_HANDSHAKE
+        handshakeDone = 0;
+#endif
         for (int state = 1; state > 0; ) {
             struct timeval tv = {
-                .tv_sec = 3,
+                .tv_sec = 3/*0*/,
                 .tv_usec = 0,
             };
 
@@ -300,25 +377,25 @@ static void mcast_worker_task(void* pvParameters) {
             FD_SET(sock, &rfds);
 
             int selected = select(sock + 1, &rfds, NULL, NULL, &tv);
+            char buffer[MULMSG_LEN];
 
             if (selected < 0) {
                 ESP_LOGE(TAG, "Select failed: errno %d", errno);
                 state = -1;
-                continue;
+                break;
             } else if (selected > 0) {
                 if (FD_ISSET(sock, &rfds)) {
                     // Incoming datagram received
-                    char recvbuf[48];
-                    char raddr_name[32] = {0};
+                	char raddr_name[32] = {0};
                     struct sockaddr_in6 raddr; // Large enough for both IPV4 or IPV6
                     socklen_t socklen = sizeof(raddr);
 
-                    int len = recvfrom(sock, recvbuf, sizeof(recvbuf) - 1, 0, (struct sockaddr*) &raddr, &socklen);
+                    int len = recvfrom(sock, buffer, sizeof(buffer), 0, (struct sockaddr*) &raddr, &socklen);
 
                     if (len < 0)  {
                         ESP_LOGE(TAG, "Multicast recvfrom failed: errno %d", errno);
                         state = -1;
-                        continue;
+                        break;
                     }
 
                     // Get the sender's address as a string
@@ -327,22 +404,33 @@ static void mcast_worker_task(void* pvParameters) {
                     }
 
                     ESP_LOGI(TAG, "Received %d bytes from %s:", len, raddr_name);
-                    recvbuf[len] = 0; // Null-terminate to treat as a string
-                    ESP_LOGI(TAG, "%s", recvbuf);
-
-                    if (strcmp(recvbuf, CONFIG_MULTICAST_HOST) == 0) {
-                    	// Send reply message to server request
-                    	state = multicast_send(sock, CONFIG_MULTICAST_PONG, CONFIG_DEVICE_ID);
-
-                    	if (state > 0) {
-                    		handshakeDone = 1;
-                    	}
+#ifdef CONFIG_MULTICAST_DEBUG
+                    switch (len) {	// 0 < MULMSG_LEN <= len
+                    	case 1:  ESP_LOGI(TAG, "%02x", buffer[0]); break;
+                    	default: ESP_LOGI(TAG, "%02x %02x", buffer[0], buffer[1]); break;
                     }
+#endif
+
+                    mulmsg* msg = mulmsg_create(buffer, MULMSG_LEN);
+                    state = handle_mulmsg(sock, msg, raddr_name);
+                    mulmsg_destroy(msg);
                 }
-            } else if (handshakeDone == 0) {
-                // Timeout passed with no incoming data, so send something
-            	state = multicast_send(sock, CONFIG_MULTICAST_PING, 0);
             }
+#ifdef CONFIG_MULTICAST_HANDSHAKE
+			else if (handshakeDone == 0) {
+				// Timeout passed with no incoming data, so send "Are You There?"
+				mulmsg* msg = mulmsg_create(buffer, MULMSG_LEN);
+
+				if (msg != 0) {
+					// TODO-FIXME disable loopback somehow
+					mulmsg_setSource(msg, 0);
+					mulmsg_setAlive(msg, 0);
+					mulmsg_setDeviceId(msg, CONFIG_DEVICE_ID);
+					state = multicast_send(sock, msg, CONFIG_MULTICAST_ADDR);
+					mulmsg_destroy(msg);
+				}
+			}
+#endif
         }
 
         ESP_LOGE(TAG, "Shutting down socket and restarting...");
@@ -351,15 +439,56 @@ static void mcast_worker_task(void* pvParameters) {
     }
 }
 
-// Sends a multicast message with device id (0 = ANY)
-static int multicast_send(int sock, const char* message, int deviceId) {
-	char sendbuf[48];
+// Handles received multicast message
+static int handle_mulmsg(int sock, mulmsg* message, const char* address) {
+	if (sock == 0 || message == 0 || address == 0) {
+		ESP_LOGE(TAG, "Failed to handle multicast message!");
+		return -1;
+	}
+
+	int err = 1;	// >0 -> success
+
+	if (mulmsg_getSource(message) != 0) {
+		if (mulmsg_getAlive(message) == 0) {
+			ESP_LOGI(TAG, "Received server 'Are You There?'");
+
+			// send 'Here I Am!'
+			mulmsg_setSource(message, 0);
+			mulmsg_setAlive(message, 1);
+			mulmsg_setDeviceId(message, CONFIG_DEVICE_ID);
+			err = multicast_send(sock, message, address);
+		} else {
+#ifdef CONFIG_MULTICAST_HANDSHAKE
+			ESP_LOGI(TAG, "Received server 'Here I Am!'");
+
+			// send 'Here I Am!'
+			mulmsg_setSource(message, 0);
+			mulmsg_setAlive(message, 1);
+			mulmsg_setDeviceId(message, CONFIG_DEVICE_ID);
+			err = multicast_send(sock, message, address);
+
+			if (err > 0) {
+				handshakeDone = 1;
+			}
+#endif
+		}
+	}
+
+	return err;
+}
+
+// Sends a multicast message via socket
+static int multicast_send(int sock, mulmsg* message, const char* address) {
+	if (sock == 0 || message == 0) {
+		ESP_LOGE(TAG, "Failed to send multicast message!");
+		return -1;
+	}
+
 	char addrbuf[32] = {0};
+	unsigned int deviceId = mulmsg_getDeviceId(message);
 
-	int len = snprintf(sendbuf, sizeof(sendbuf), message, deviceId);
-
-	if (len > sizeof(sendbuf)) {
-		ESP_LOGE(TAG, "Multicast sendfmt buffer overflow!");
+	if (deviceId > DEVICEID_MAX) {
+		ESP_LOGE(TAG, "Device ID must be in range of 0 <= deviceId <= %d", DEVICEID_MAX);
 		return -1;
 	}
 
@@ -370,7 +499,7 @@ static int multicast_send(int sock, const char* message, int deviceId) {
 		.ai_family = AF_INET
 	};
 
-	int err = getaddrinfo(CONFIG_MULTICAST_ADDR, NULL, &hints, &res);
+	int err = getaddrinfo(address, NULL, &hints, &res);
 
 	if (err < 0) {
 		ESP_LOGE(TAG, "Failed getaddrinfo() for IP destination address. error: %d", err);
@@ -379,9 +508,10 @@ static int multicast_send(int sock, const char* message, int deviceId) {
 
 	((struct sockaddr_in*) res->ai_addr)->sin_port = htons(CONFIG_MULTICAST_PORT);
 	inet_ntoa_r(((struct sockaddr_in*) res->ai_addr)->sin_addr, addrbuf, sizeof(addrbuf) - 1);
-	ESP_LOGI(TAG, "Sending to IPV4 multicast address %s...", addrbuf);
+	ESP_LOGI(TAG, "Sending to IPV4 multicast address %s:%d...", addrbuf, CONFIG_MULTICAST_PORT);
 
-	err = sendto(sock, sendbuf, len, 0, res->ai_addr, res->ai_addrlen);
+	err = sendto(sock, mulmsg_unwrap(message), MULMSG_LEN, 0, res->ai_addr, res->ai_addrlen);
+	freeaddrinfo(res);
 
 	if (err < 0) {
 		ESP_LOGE(TAG, "Failed sendto() data. errno: %d", errno);
