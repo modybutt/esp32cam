@@ -242,6 +242,7 @@ static int create_multicast_ipv4_socket() {
 	saddr.sin_family = PF_INET;
 	saddr.sin_port = htons(CONFIG_MULTICAST_PORT);
 	saddr.sin_addr.s_addr = htonl(INADDR_ANY);
+	//inet_aton("192.168.4.1", &saddr.sin_addr.s_addr);
 
 	err = bind(sock, (struct sockaddr*) &saddr, sizeof(struct sockaddr_in));
 
@@ -261,7 +262,7 @@ static int create_multicast_ipv4_socket() {
 		return -1;
 	}
 
-	// Disable device multicast loopback
+	// Disable device multicast loopback		DEFAULT
 //	uint8_t loopback_val = 0;
 //	err = setsockopt(sock, IPPROTO_IP, IP_MULTICAST_LOOP, &loopback_val, sizeof(uint8_t));
 //
@@ -286,7 +287,7 @@ static int create_multicast_ipv4_socket() {
 // Registers to multicast group to receive messages
 static int register_multicast_ipv4_group(int sock) {
     struct ip_mreq imreq = { 0 };
-    struct in_addr iaddr = { 0 };
+//    struct in_addr iaddr = { 0 };
 //    esp_netif_ip_info_t ip_info = { 0 };
     int err = 0;
 
@@ -299,10 +300,10 @@ static int register_multicast_ipv4_group(int sock) {
 //
 //	inet_addr_from_ip4addr(&iaddr, &ip_info.ip);
 
-//    tcpip_adapter_ip_info_t ip_info = { 0 };
-//    tcpip_adapter_get_ip_info(ESP_IF_WIFI_STA, &ip_info);
-//    ESP_LOGI(TAG, "IP %s", ip4addr_ntoa(&ip_info.ip));
-//    inet_addr_from_ip4addr(&iaddr, &ip_info.ip);
+    //tcpip_adapter_ip_info_t ip_info = { 0 };
+    //tcpip_adapter_get_ip_info(ESP_IF_WIFI_STA, &ip_info);
+    //ESP_LOGI(TAG, "IP %s", ip4addr_ntoa(&ip_info.ip));
+    //inet_addr_from_ip4addr(&iaddr, &ip_info.ip);
 
     // Configure multicast address to listen to
     err = inet_aton(CONFIG_MULTICAST_ADDR, &imreq.imr_multiaddr.s_addr);
@@ -312,20 +313,28 @@ static int register_multicast_ipv4_group(int sock) {
         return -1;
     }
 
-    ESP_LOGI(TAG, "Configured IPV4 Multicast address %s", inet_ntoa(imreq.imr_multiaddr.s_addr));
-
-    // Check for valid address range
+	// Check for valid address range
     if (!IP_MULTICAST(ntohl(imreq.imr_multiaddr.s_addr))) {
         ESP_LOGW(TAG, "Configured IPV4 multicast address '%s' is not a valid multicast address. This will probably not work.", CONFIG_MULTICAST_ADDR);
+    } else {
+    	ESP_LOGI(TAG, "Configured IPV4 multicast address %s", inet_ntoa(imreq.imr_multiaddr.s_addr));
     }
 
-    // Assign the IPV4 multicast source interface via its IP
-    err = setsockopt(sock, IPPROTO_IP, IP_MULTICAST_IF, &iaddr, sizeof(struct in_addr));
+//    // Configure multicast source interface
+//	err = inet_aton(ip4addr_ntoa(&ip_info.ip), &imreq.imr_interface.s_addr);
+//
+//	if (err != 1) {
+//		ESP_LOGE(TAG, "Configured IPV4 multicast source interface '%s' is invalid.", ip4addr_ntoa(&ip_info.ip));
+//		return -1;
+//	}
 
-    if (err < 0) {
-		ESP_LOGE(TAG, "Failed to set IP_MULTICAST_IF. Error %d", errno);
-		return -1;
-	}
+    // Assign the IPV4 multicast source interface via its IP
+//    err = setsockopt(sock, IPPROTO_IP, IP_MULTICAST_IF, &iaddr, sizeof(struct in_addr));
+//
+//    if (err < 0) {
+//		ESP_LOGE(TAG, "Failed to set IP_MULTICAST_IF. Error %d", errno);
+//		return -1;
+//	}
 
     // Assign to the multicast group
     err = setsockopt(sock, IPPROTO_IP, IP_ADD_MEMBERSHIP, &imreq, sizeof(struct ip_mreq));
@@ -403,11 +412,12 @@ static void mcast_worker_task(void* pvParameters) {
                         inet_ntoa_r(((struct sockaddr_in*) &raddr)->sin_addr.s_addr, raddr_name, sizeof(raddr_name) - 1);
                     }
 
-                    ESP_LOGI(TAG, "Received %d bytes from %s:", len, raddr_name);
+                    ESP_LOGI(TAG, "Received %d bytes from %s", len, raddr_name);
 #ifdef CONFIG_MULTICAST_DEBUG
-                    switch (len) {	// 0 < MULMSG_LEN <= len
-                    	case 1:  ESP_LOGI(TAG, "%02x", buffer[0]); break;
-                    	default: ESP_LOGI(TAG, "%02x %02x", buffer[0], buffer[1]); break;
+                    switch (len) {
+                    	case 0: break;
+                    	case 1:  ESP_LOGI(TAG, "RCV %02x", buffer[0]); break;
+                    	default: ESP_LOGI(TAG, "RCV %02x %02x", buffer[0], buffer[1]); break;
                     }
 #endif
 
@@ -422,7 +432,6 @@ static void mcast_worker_task(void* pvParameters) {
 				mulmsg* msg = mulmsg_create(buffer, MULMSG_LEN);
 
 				if (msg != 0) {
-					// TODO-FIXME disable loopback somehow
 					mulmsg_setSource(msg, 0);
 					mulmsg_setAlive(msg, 0);
 					mulmsg_setDeviceId(msg, CONFIG_DEVICE_ID);
@@ -450,18 +459,14 @@ static int handle_mulmsg(int sock, mulmsg* message, const char* address) {
 
 	if (mulmsg_getSource(message) != 0) {
 		if (mulmsg_getAlive(message) == 0) {
-			ESP_LOGI(TAG, "Received server 'Are You There?'");
-
-			// send 'Here I Am!'
+			// send client 'Here I Am!' on server 'Are You There?'
 			mulmsg_setSource(message, 0);
 			mulmsg_setAlive(message, 1);
 			mulmsg_setDeviceId(message, CONFIG_DEVICE_ID);
 			err = multicast_send(sock, message, address);
 		} else {
 #ifdef CONFIG_MULTICAST_HANDSHAKE
-			ESP_LOGI(TAG, "Received server 'Here I Am!'");
-
-			// send 'Here I Am!'
+			// send client 'Here I Am!' on server 'Here I Am!'
 			mulmsg_setSource(message, 0);
 			mulmsg_setAlive(message, 1);
 			mulmsg_setDeviceId(message, CONFIG_DEVICE_ID);
@@ -479,7 +484,9 @@ static int handle_mulmsg(int sock, mulmsg* message, const char* address) {
 
 // Sends a multicast message via socket
 static int multicast_send(int sock, mulmsg* message, const char* address) {
-	if (sock == 0 || message == 0) {
+	const char* data = mulmsg_unwrap(message);
+
+	if (sock == 0 || data == 0 || address == 0) {
 		ESP_LOGE(TAG, "Failed to send multicast message!");
 		return -1;
 	}
@@ -508,9 +515,13 @@ static int multicast_send(int sock, mulmsg* message, const char* address) {
 
 	((struct sockaddr_in*) res->ai_addr)->sin_port = htons(CONFIG_MULTICAST_PORT);
 	inet_ntoa_r(((struct sockaddr_in*) res->ai_addr)->sin_addr, addrbuf, sizeof(addrbuf) - 1);
-	ESP_LOGI(TAG, "Sending to IPV4 multicast address %s:%d...", addrbuf, CONFIG_MULTICAST_PORT);
 
-	err = sendto(sock, mulmsg_unwrap(message), MULMSG_LEN, 0, res->ai_addr, res->ai_addrlen);
+	ESP_LOGI(TAG, "Sending to IPV4 address %s:%d...", addrbuf, CONFIG_MULTICAST_PORT);
+#ifdef CONFIG_MULTICAST_DEBUG
+	ESP_LOGI(TAG, "SND %02x %02x", data[0], data[1]); 	// hint: MULMSG_LEN confirmed
+#endif
+
+	err = sendto(sock, data, MULMSG_LEN, 0, res->ai_addr, res->ai_addrlen);
 	freeaddrinfo(res);
 
 	if (err < 0) {
