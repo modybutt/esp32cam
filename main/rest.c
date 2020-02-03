@@ -47,11 +47,9 @@ static int handle_mulmsg(int sock, mulmsg *message, const char *address);
 
 // Sends a multicast message via socket
 static int multicast_send(int sock, mulmsg *message, const char *address);
-
+//handle the leds
 static esp_err_t start_led_httpd_handler(httpd_req_t *req);
 
-// Turn off the Led via HTTP GET: "/stop_led"
-static esp_err_t stop_led_httpd_handler(httpd_req_t *req);
 
 // Logger tag name
 static const char *TAG = "LMS";
@@ -264,45 +262,24 @@ static esp_err_t start_led_httpd_handler(httpd_req_t *req) {
     struct led_state new_state;
 
     while (remaining > 0) {
-        /* Read the data for the request */
         if ((ret = httpd_req_recv(req, buf,
                                   MIN(remaining, sizeof(buf)))) <= 0) {
             if (ret == HTTPD_SOCK_ERR_TIMEOUT) {
-                /* Retry receiving if timeout occurred */
                 continue;
             }
         }
         remaining -= ret;
-
-        /* Log data received */
-        ESP_LOGI(TAG, "=========== RECEIVED DATA ==========");
-        ESP_LOGI(TAG, "%.*s", ret, buf);
-        ESP_LOGI(TAG, "====================================");
-
     }
 
-    //check if the received value is a hex
     if (ret == 8) {
         int color;
         sscanf(buf, "%x", &color);
-        printf("____________________________\n");
-        printf("%u\n", color);
-        printf("____________________________\n");
 
         for (int led = 0; led < NUM_LEDS; led++) {
             new_state.leds[led] = color;
         }
     }
     write_leds(new_state);
-    const char resp[] = "200 OK";
-    httpd_resp_send(req, resp, strlen(resp));
-    return ESP_OK;
-}
-
-static esp_err_t stop_led_httpd_handler(httpd_req_t *req) {
-
-    turn_leds_off();
-
     const char resp[] = "200 OK";
     httpd_resp_send(req, resp, strlen(resp));
     return ESP_OK;

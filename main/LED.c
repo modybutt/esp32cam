@@ -1,19 +1,16 @@
 #include "LED.h"
 #include "driver/rmt.h"
 
-// Configure these based on your project needs ********
 #define LED_RMT_TX_CHANNEL RMT_CHANNEL_0
 #define LED_RMT_TX_GPIO 14
-// ****************************************************
 
 #define BITS_PER_LED_CMD 24
 #define LED_BUFFER_ITEMS ((NUM_LEDS * BITS_PER_LED_CMD))
 
-// These values are determined by measuring pulse timing with logic analyzer and adjusting to match datasheet.
-#define T0H 8 //4 //12  // 0 bit high time 14
-#define T1H 17 //8 //36  // 1 bit high time 52
-#define T1L 8//4 //12  // low time for either bit 52
-#define T0L 17 //8 //36
+#define T0H 8
+#define T1H 17
+#define T1L 8
+#define T0L 17
 
 #define GREEN 0xFF0000
 #define RED   0x00FF00
@@ -21,7 +18,7 @@
 #define WHITE 0xFFFFFF
 #define BLACK 0x000000
 #define NUM_LEDS 50
-// This is the buffer which the hw peripheral will access while pulsing the output pin
+
 rmt_item32_t led_data_buffer[LED_BUFFER_ITEMS];
 
 void setup_rmt_data_buffer(struct led_state new_state);
@@ -40,16 +37,8 @@ void init_leds(void) {
     config.tx_config.idle_level = 0;
     config.clk_div = 4;
 
-//    struct led_state new_state;
-//    for (int led = 0; led < NUM_LEDS; led++) {
-//        new_state.leds[led] = WHITE;
-//    }
-
-
     ESP_ERROR_CHECK(rmt_config(&config));
     ESP_ERROR_CHECK(rmt_driver_install(config.channel, 0, 0));
-    //int i = 0;
-    //write_leds(new_state);
 
 }
 
@@ -59,14 +48,6 @@ void write_leds(struct led_state new_state) {
     ESP_ERROR_CHECK(rmt_wait_tx_done(LED_RMT_TX_CHANNEL, portMAX_DELAY));
 }
 
-void turn_leds_off() {
-
-    struct led_state new_state;
-    for (int led = 0; led < NUM_LEDS; led++) {
-        new_state.leds[led] = BLACK;
-    }
-        write_leds(new_state);
-}
 
 void setup_rmt_data_buffer(struct led_state new_state) {
     for (uint32_t led = 0; led < NUM_LEDS; led++) {
