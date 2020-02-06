@@ -15,7 +15,7 @@
 
 void app_main(void) {
 	if ((flash_setup() | camera_setup() | led_setup() | rest_setup() | mulcast_setup()) != ESP_OK) {
-		ESP_LOGI("APP", "Failed to setup application!");
+		ESP_LOGE("APP", "Failed to setup application!");
 	} else {
 		ESP_LOGI("APP", "Starting application.");
 		rest_start();
