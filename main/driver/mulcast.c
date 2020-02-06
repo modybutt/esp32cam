@@ -84,7 +84,7 @@ static void mcast_worker_task(void* args) {
 #endif
         for (int state = 1; state > 0;) {
             struct timeval tv = {
-				.tv_sec = 3,
+				.tv_sec = CONFIG_MULTICAST_HANDSHAKE,
 				.tv_usec = 0,
             };
 
@@ -128,7 +128,7 @@ static void mcast_worker_task(void* args) {
                     }
 #endif
 
-                    mulmsg *msg = mulmsg_create(buffer, MULMSG_LEN);
+                    mulmsg* msg = mulmsg_create(buffer, MULMSG_LEN);
                     state = handle_mulmsg(sock, msg, raddr_name);
                     mulmsg_destroy(msg);
                 }

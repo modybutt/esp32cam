@@ -13,7 +13,7 @@
 #define CONFIG_DEVICE_ID 	       2
 #define CONFIG_MULTICAST_ADDR      "230.0.0.0"
 #define CONFIG_MULTICAST_PORT 	   4446
-#define CONFIG_MULTICAST_HANDSHAKE
+#define CONFIG_MULTICAST_HANDSHAKE 3
 //#define CONFIG_MULTICAST_DEBUG
 
 int mulcast_setup(void);

@@ -28,9 +28,8 @@
 
 static const char* LOGGER_NAME = "LED";	// logger name tag
 
-void setup_rmt_data_buffer(struct led_state new_state);
-
-rmt_item32_t led_data_buffer[LED_BUFFER_ITEMS];
+static void setup_rmt_data_buffer(led_state new_state);
+static rmt_item32_t led_data_buffer[LED_BUFFER_ITEMS];
 
 int led_setup(void) {
 	ESP_LOGI(LOGGER_NAME, "Initializing...");
@@ -59,14 +58,14 @@ int led_setup(void) {
     return err;
 }
 
-void led_write(struct led_state new_state) {
+void led_write(led_state new_state) {
     setup_rmt_data_buffer(new_state);
     ESP_ERROR_CHECK(rmt_write_items(LED_RMT_TX_CHANNEL, led_data_buffer, LED_BUFFER_ITEMS, false));
     ESP_ERROR_CHECK(rmt_wait_tx_done(LED_RMT_TX_CHANNEL, portMAX_DELAY));
 }
 
 
-void setup_rmt_data_buffer(struct led_state new_state) {
+static void setup_rmt_data_buffer(led_state new_state) {
     for (uint32_t led = 0; led < NUM_LEDS; led++) {
         uint32_t bits_to_send = new_state.leds[led];
         uint32_t mask = 1 << (BITS_PER_LED_CMD - 1);

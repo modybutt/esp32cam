@@ -9,15 +9,14 @@
 #define MAIN_DRIVER_LED_H_
 
 #include <stdint.h>
-#include <sys/param.h>
 
 #define NUM_LEDS 50
 
-struct led_state {
+typedef struct led_state {
     uint32_t leds[NUM_LEDS];
-};
+} led_state;
 
 int led_setup(void);
-void led_write(struct led_state new_state);
+void led_write(led_state new_state);
 
 #endif /* MAIN_DRIVER_LED_H_ */

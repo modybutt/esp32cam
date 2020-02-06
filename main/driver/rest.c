@@ -15,6 +15,7 @@
 #include <esp_wifi.h>
 #include <esp_event_loop.h>
 #include <esp_err.h>
+#include <sys/param.h>
 
 // Handles WiFi status changes and manages webserver execution
 static esp_err_t event_handler(void* ctx, system_event_t* event);
@@ -46,7 +47,6 @@ static httpd_uri_t uri_handler_start_leds = {
 int rest_setup(void) {
     ESP_LOGI(LOGGER_NAME, "Initializing...");
     tcpip_adapter_init();
-
 
     static httpd_handle_t server = NULL;	// The HTTP-Server (REST) reference
     int err = esp_event_loop_init(event_handler, &server);
