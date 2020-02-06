@@ -100,7 +100,6 @@ static esp_err_t event_handler(void* ctx, system_event_t* event) {
         }
         case SYSTEM_EVENT_STA_DISCONNECTED: {
             ESP_LOGI(LOGGER_NAME, "SYSTEM_EVENT_STA_DISCONNECTED");
-            ESP_ERROR_CHECK(esp_wifi_connect());
 
             /* Stop the web server */
             if (*webserver != NULL) {
@@ -109,7 +108,7 @@ static esp_err_t event_handler(void* ctx, system_event_t* event) {
                 *webserver = NULL;
             }
 
-            esp_wifi_connect();
+            ESP_ERROR_CHECK(esp_wifi_connect());
             break;
         }
         default: {
@@ -205,7 +204,5 @@ static esp_err_t httpd_handler_start_led(httpd_req_t* req){
     }
 
     led_write(new_state);
-	httpd_resp_send(req, NULL, 0);	// 200 OK
-
-    return ESP_OK;
+    return httpd_resp_send(req, NULL, 0);	// 200 OK
 }

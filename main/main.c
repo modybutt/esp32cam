@@ -20,6 +20,5 @@ void app_main(void) {
 		ESP_LOGI("APP", "Starting application.");
 		rest_start();
 		mulcast_start();
-		//while(1);
 	}
 }
