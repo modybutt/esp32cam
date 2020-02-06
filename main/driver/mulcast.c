@@ -44,6 +44,16 @@ void mulcast_start(void) {
 	}
 }
 
+void mulcast_enable(unsigned char enabled) {
+	ESP_LOGI(LOGGER_NAME, "Enabled: %d", enabled);
+
+	if (enabled == 1) {
+		xEventGroupSetBits(wifi_event_group, BIT0);
+	} else {
+		xEventGroupClearBits(wifi_event_group, BIT0);
+	}
+}
+
 // Multicast working task handling receiving and sending messages
 static void mcast_worker_task(void* args) {
     while (1) {
@@ -106,8 +116,7 @@ static void mcast_worker_task(void* args) {
 
                     // Get the sender's address as a string
                     if (raddr.sin6_family == PF_INET) {
-                        inet_ntoa_r(((struct sockaddr_in *) &raddr)->sin_addr.s_addr, raddr_name,
-                                    sizeof(raddr_name) - 1);
+                        inet_ntoa_r(((struct sockaddr_in *) &raddr)->sin_addr.s_addr, raddr_name, sizeof(raddr_name) - 1);
                     }
 
                     ESP_LOGI(LOGGER_NAME, "Received %d bytes from %s", len, raddr_name);

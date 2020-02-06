@@ -47,8 +47,9 @@ int rest_setup(void) {
     ESP_LOGI(LOGGER_NAME, "Initializing...");
     tcpip_adapter_init();
 
-    static httpd_handle_t* server = NULL;	// The HTTP-Server (REST) instance
-    int err = esp_event_loop_init(event_handler, server);
+
+    static httpd_handle_t server = NULL;	// The HTTP-Server (REST) reference
+    int err = esp_event_loop_init(event_handler, &server);
 
     ESP_ERROR_CHECK(err);
     if (err == ESP_OK) {
@@ -77,7 +78,7 @@ void rest_start(void) {
 
 // Handles WiFi status changes and manages webserver execution
 static esp_err_t event_handler(void* ctx, system_event_t* event) {
-    httpd_handle_t* server = (httpd_handle_t *) ctx;
+    httpd_handle_t* webserver = (httpd_handle_t*) ctx;
 
     switch (event->event_id) {
         case SYSTEM_EVENT_STA_START: {
@@ -90,9 +91,9 @@ static esp_err_t event_handler(void* ctx, system_event_t* event) {
             ESP_LOGI(LOGGER_NAME, "Got IP: '%s'", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 
             /* Start the web server */
-            if (*server == NULL) {
-                *server = start_webserver();
-                //xEventGroupSetBits(wifi_event_group, BIT0);
+            if (*webserver == NULL) {
+            	*webserver = start_webserver();
+                mulcast_enable(1);
             }
 
             break;
@@ -102,10 +103,10 @@ static esp_err_t event_handler(void* ctx, system_event_t* event) {
             ESP_ERROR_CHECK(esp_wifi_connect());
 
             /* Stop the web server */
-            if (*server) {
-                //xEventGroupClearBits(wifi_event_group, BIT0);
-                stop_webserver(*server);
-                *server = NULL;
+            if (*webserver != NULL) {
+            	mulcast_enable(0);
+                stop_webserver(*webserver);
+                *webserver = NULL;
             }
 
             esp_wifi_connect();
@@ -121,17 +122,17 @@ static esp_err_t event_handler(void* ctx, system_event_t* event) {
 
 // Starts the HTTP daemon server
 static httpd_handle_t start_webserver(void) {
-    httpd_handle_t server = NULL;
+    httpd_handle_t webserver = NULL;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
 
     ESP_LOGI(LOGGER_NAME, "Starting server on port: '%d'", config.server_port);
 
-    if (httpd_start(&server, &config) == ESP_OK) {
+    if (httpd_start(&webserver, &config) == ESP_OK) {
         // Set URI handlers
         ESP_LOGI(LOGGER_NAME, "Registering URI handlers");
-        httpd_register_uri_handler(server, &uri_handler_jpg);
-        httpd_register_uri_handler(server, &uri_handler_start_leds);
-        return server;
+        httpd_register_uri_handler(webserver, &uri_handler_jpg);
+        httpd_register_uri_handler(webserver, &uri_handler_start_leds);
+        return webserver;
     }
 
     ESP_LOGI(LOGGER_NAME, "Error starting server!");
@@ -139,8 +140,8 @@ static httpd_handle_t start_webserver(void) {
 }
 
 // Stops the HTTP daemon server
-static void stop_webserver(httpd_handle_t server) {
-    httpd_stop(server);
+static void stop_webserver(httpd_handle_t webserver) {
+    httpd_stop(webserver);
 }
 
 // Handles HTTP GET: "Image Snapshot" request
@@ -177,7 +178,7 @@ static esp_err_t httpd_handler_jpg(httpd_req_t* req) {
 }
 
 // Handles HTTP POST: "Start LED"
-static esp_err_t httpd_handler_start_led(httpd_req_t* req) {
+static esp_err_t httpd_handler_start_led(httpd_req_t* req){
     char buf[100];
     int ret = 0;
     ret = req->content_len;
@@ -204,7 +205,7 @@ static esp_err_t httpd_handler_start_led(httpd_req_t* req) {
     }
 
     led_write(new_state);
-    httpd_resp_send(req, req->user_ctx, strlen(req->user_ctx));
+	httpd_resp_send(req, NULL, 0);	// 200 OK
 
     return ESP_OK;
 }

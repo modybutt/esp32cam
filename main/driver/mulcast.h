@@ -14,9 +14,10 @@
 #define CONFIG_MULTICAST_ADDR      "230.0.0.0"
 #define CONFIG_MULTICAST_PORT 	   4446
 #define CONFIG_MULTICAST_HANDSHAKE
-#define CONFIG_MULTICAST_DEBUG
+//#define CONFIG_MULTICAST_DEBUG
 
 int mulcast_setup(void);
 void mulcast_start(void);
+void mulcast_enable(unsigned char enabled);
 
 #endif /* MAIN_DRIVER_MULCAST_H_ */
