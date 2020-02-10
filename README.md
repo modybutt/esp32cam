@@ -7,6 +7,7 @@ Creates a http server and listen to `GET` requests at `http://[board-ip]/jpg` as
 In order to run this example, you need the `esp-idf` repository with the `esp32-camera` as additional component library.
 
 > git clone https://github.com/espressif/esp-idf --recursive esp-idf
+
 > git clone https://github.com/espressif/esp32-camera --recursive esp32-camera
 
 Then you need to configure your WiFi SSID and Password via `make menuconfig` or directly in [Kconfig.projbuild](./main/Kconfig.projbuild) file. Alternativly when working with IDE (Eclipse) you can configure the `sdkconfig` in the root directory.
